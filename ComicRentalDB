@@ -1,0 +1,27 @@
+CREATE DATABASE ComicRentalDB;
+
+USE ComicRentalDB;
+
+CREATE TABLE Users (
+    UserId INT PRIMARY KEY IDENTITY(1,1),
+    UserName NVARCHAR(100) NOT NULL,
+    Email NVARCHAR(100) NOT NULL UNIQUE,
+    PasswordHash NVARCHAR(256) NOT NULL
+);
+
+CREATE TABLE Comics (
+    ComicId INT PRIMARY KEY IDENTITY(1,1),
+    Title NVARCHAR(255) NOT NULL,
+    Author NVARCHAR(100) NOT NULL,
+    Genre NVARCHAR(100),
+    Price DECIMAL(18, 2) NOT NULL,
+    AvailableCopies INT NOT NULL
+);
+
+CREATE TABLE Rentals (
+    RentalId INT PRIMARY KEY IDENTITY(1,1),
+    UserId INT FOREIGN KEY REFERENCES Users(UserId),
+    ComicId INT FOREIGN KEY REFERENCES Comics(ComicId),
+    RentalDate DATETIME NOT NULL,
+    ReturnDate DATETIME
+);
